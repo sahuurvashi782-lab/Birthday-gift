@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 🎂</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #240046, #7b2cbf, #ff4d8d);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 24px 14px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 30px 20px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 28px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.25);
+      position: relative;
+      z-index: 2;
+      animation: appear 1s ease-out;
+    }
+
+    .emoji {
+      font-size: clamp(55px, 15vw, 90px);
+      animation: bounce 1.5s infinite;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 8vw, 50px);
+      line-height: 1.2;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #fff, #ffe066, #ffb3d9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(255,255,255,0.2));
+    }
+
+    .name {
+      color: #ffe066;
+      overflow-wrap: anywhere;
+    }
+
+    .message {
+      font-size: clamp(15px, 4vw, 19px);
+      line-height: 1.8;
+      margin: 18px auto;
+      max-width: 460px;
+    }
+
+    .cake {
+      font-size: clamp(65px, 18vw, 100px);
+      margin: 12px 0;
+      animation: glow 2s infinite alternate;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 22px;
+    }
+
+    button {
+      width: 100%;
+      max-width: 290px;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #ffe066, #ffb3d9);
+      color: #4a145e;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(255,224,102,0.4);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .footer {
+      margin-top: 22px;
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      z-index: 5;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    .star {
+      position: fixed;
+      pointer-events: none;
+      animation: sparkle 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translate3d(0, -10vh, 0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(var(--drift), 110vh, 0)
+                   rotate(var(--rotation));
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 5px #ffe066); }
+      to { filter: drop-shadow(0 0 22px #ffb3d9); }
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes sparkle {
+      from { opacity: 0.3; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        padding: 25px 16px;
+        border-radius: 22px;
+      }
+
+      .message {
+        line-height: 1.65;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+    <div class="emoji">🎉</div>
+
+    <h1>Happy Birthday!</h1>
+
+    <h2 class="name" id="birthdayName">Dear Bestie 💖</h2>
+
+    <div class="cake">🎂</div>
+
+    <p class="message" id="birthdayMessage">
+      May your special day be filled with endless happiness,
+      beautiful memories, lots of love, and all the success
+      your heart dreams of. Keep smiling and shining! ✨
+    </p>
+
+    <p class="subtitle">
+      Today is all about YOU! 🥳🎈
+    </p>
+
+    <button id="celebrateBtn" type="button">
+      🎊 Celebrate Again 🎊
+    </button>
+
+    <div class="footer">
+      Made with ❤️ just for you
+    </div>
+  </main>
+
+  <script>
+    const colors = [
+      "#ff4d8d",
+      "#ffe066",
+      "#80ffdb",
+      "#ffffff",
+      "#c77dff",
+      "#ff9f1c",
+      "#4cc9f0"
+    ];
+
+    const button = document.getElementById("celebrateBtn");
+    let celebrationRunning = false;
+
+    function createConfetti() {
+      // Keep the animation smooth on mobile phones.
+      const count = window.innerWidth < 600 ? 90 : 160;
+      const fragment = document.createDocumentFragment();
+
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+
+        const size = Math.random() * 8 + 5;
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.width = size + "px";
+        piece.style.height = size * 1.4 + "px";
+        piece.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.borderRadius =
+          Math.random() > 0.5 ? "50%" : "2px";
+
+        piece.style.setProperty(
+          "--drift",
+          (Math.random() * 180 - 90) + "px"
+        );
+
+        piece.style.setProperty(
+          "--rotation",
+          (Math.random() * 1440 - 720) + "deg"
+        );
+
+        piece.style.animationDuration =
+          (Math.random() * 3 + 3) + "s";
+
+        piece.style.animationDelay =
+          (Math.random() * 1.5) + "s";
+
+        fragment.appendChild(piece);
+
+        piece.addEventListener("animationend", () => {
+          piece.remove();
+        }, { once: true });
+      }
+
+      document.body.appendChild(fragment);
+    }
+
+    function celebrate() {
+      if (celebrationRunning) return;
+
+      celebrationRunning = true;
+      createConfetti();
+
+      button.textContent = "💖 More Love, More Happiness! 💖";
+
+      setTimeout(() => {
+        button.textContent = "🎊 Celebrate Again 🎊";
+        celebrationRunning = false;
+      }, 1800);
+    }
+
+    button.addEventListener("click", celebrate);
+
+    // Start the birthday celebration automatically.
+    window.addEventListener("load", () => {
+      setTimeout(celebrate, 400);
+    });
+  </script>
+
+</body>
+</html>
